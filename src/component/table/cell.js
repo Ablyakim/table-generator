@@ -16,7 +16,7 @@ class Cell extends React.Component {
     render() {
         return (
             <div className={this.baseClassName}>
-                {this.props.index} - {this.props.value}
+                {this.props.value}
             </div>
         );
     }

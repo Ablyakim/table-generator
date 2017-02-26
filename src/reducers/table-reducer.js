@@ -1,11 +1,58 @@
-import {SET_TABLE_DATA} from '../actions/table-actions';
+import {
+    SET_TABLE_DATA,
+    ADD_COL_TO_INDEX,
+    REMOVE_COL_BY_INDEX
+} from '../actions/table-actions';
+
+const calcAllControllersNum = (tableData) => {
+    let rowControllersNum = 0;
+    let colControllersNum = 0;
+    if (tableData) {
+        rowControllersNum = tableData.length;
+        tableData.forEach((row) => {
+            if (row.length > colControllersNum) {
+                colControllersNum = row.length;
+            }
+        });
+    }
+    return {rowControllersNum, colControllersNum};
+};
+
+const setTableData = (state, action) => {
+    let tableData = action.data.slice();
+    return Object.assign({}, state, {
+        data: tableData
+    }, calcAllControllersNum(tableData));
+};
+
+const addColToIndex = (state, action) => {
+    let tableData = state.data.slice();
+    tableData.forEach((item) => {
+        item.splice(action.colIndex, 0, action.value);
+    });
+    return Object.assign({}, state, {
+        data: tableData
+    }, calcAllControllersNum(tableData));
+};
+
+const removeColByIndex = (state, action) => {
+    let tableData = state.data.slice();
+    tableData.forEach((item) => {
+        item.splice(action.colIndex, 1);
+    });
+    return Object.assign({}, state, {
+        data: tableData
+    }, calcAllControllersNum(tableData));
+};
 
 export default (state = {}, action) => {
     switch (action.type) {
         case SET_TABLE_DATA:
-            return Object.assign({}, state, {
-                data: action.data.slice()
-            });
+            return setTableData(state, action);
+        case ADD_COL_TO_INDEX:
+            return addColToIndex(state, action);
+        case REMOVE_COL_BY_INDEX:
+            return removeColByIndex(state, action);
         default:
             return state;
     }
