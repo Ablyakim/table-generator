@@ -16,6 +16,9 @@ class App extends React.Component {
             <div>
                 <div className="container">
                     <Table />
+                    <div className="import">
+                        <div className="btn import__import-button">Generate table</div>
+                    </div>
                 </div>
             </div>
         )
@@ -28,7 +31,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         loadEmptyTable: () => {
-            dispatch(setTableData([[1, 2], [3, 4]]));
+            dispatch(setTableData([['', ''], ['', '']]));
         }
     };
 };
