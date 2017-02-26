@@ -1,5 +1,6 @@
 @import "reset";
 
+
 .siblingSameWidth (@index) when (@index > 0) {
   &:first-child:nth-last-child(@{index}),
   &:first-child:nth-last-child(@{index}) ~ & {
@@ -8,17 +9,76 @@
   .siblingSameWidth(@index - 1);
 }
 
+.cell-styles() {
+  background-color: #ffffff;
+  border-left: 1px solid @border-color;
+  &:last-child {
+    border-right: 1px solid @border-color;
+  }
+  padding: 3px;
+  height: @cell-height;
+  //100 siblings should be enough
+  .siblingSameWidth(100);
+}
+
 @max-width: 1000px;
 @cell-height: 60px;
 @border-color: #ccc;
+
 .container {
   max-width: @max-width;
   margin: 0 auto;
 }
+.dropdown {
+  position: absolute;
+  list-style: none;
+  background-color: #ffffff;
+  border: 1px solid @border-color;
+  box-shadow: 2px 3px 6px @border-color;
+  display: none;
+  z-index: 10;
+  min-width: 135px;
 
+  > li {
+    padding: 5px 10px;
+    cursor: pointer;
+    &:hover {
+      background-color: @border-color;
+    }
+    &:first-child {
+      padding-top: 10px;
+    }
+    &:last-child {
+      padding-bottom: 10px;
+    }
+  }
+}
 .table-view {
   display: flex;
   flex-direction: column;
+  &__col-controllers {
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid @border-color;
+    border-bottom: 1px solid @border-color;
+    margin-bottom: 5px;
+    &__cell {
+      .cell-styles();
+      background-color: lighten(@border-color, 15%);
+      position: relative;
+      .menu-trigger {
+        position: absolute;
+        right: 10px;
+        top: 0;
+        cursor: pointer;
+        &:hover .dropdown{
+          display: block;
+          top: 0;
+          right: 0;
+        }
+      }
+    }
+  }
   &__row {
     display: flex;
     flex-direction: row;
@@ -27,14 +87,7 @@
       border-bottom: 1px solid @border-color;
     }
     &__cell {
-      border-left: 1px solid @border-color;
-      &:last-child {
-        border-right: 1px solid @border-color;
-      }
-      padding: 3px;
-      height: @cell-height;
-      //100 siblings should be enough
-      .siblingSameWidth(100);
+      .cell-styles()
     }
   }
 }
