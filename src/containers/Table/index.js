@@ -2,9 +2,13 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Row from 'Components/table/row';
 import ColController from './col-controller';
-const baseClassName = 'table-view';
-const colControllerBaseClassName = [baseClassName, 'col-controllers'].join('__');
+import RowController from './row-controller';
 import {changeCellValue} from '../../actions/table-actions';
+
+const baseClassName = 'table-view';
+const rowControllerBaseClassName = [baseClassName, 'row-controllers'].join('__');
+const colControllerBaseClassName = [baseClassName, 'col-controllers'].join('__');
+
 
 class Table extends React.Component {
 
@@ -27,10 +31,24 @@ class Table extends React.Component {
             ));
         }
 
+        let rowControllers = [];
+        for (let i = 0; i < this.props.rowControllersNum; i++) {
+            rowControllers.push((
+                <RowController
+                    baseClassName={rowControllerBaseClassName}
+                    key={i}
+                    index={i}
+                />
+            ));
+        }
+
         return (
             <div className={baseClassName}>
-                <div className={[baseClassName, 'col-controllers'].join('__')}>
+                <div className={colControllerBaseClassName}>
                     {colControllers}
+                </div>
+                <div className={rowControllerBaseClassName}>
+                    {rowControllers}
                 </div>
                 <div className={[baseClassName, 'body'].join('__')}>
                     {this.props.data.map((cells, index) => {

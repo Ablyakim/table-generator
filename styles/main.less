@@ -3,6 +3,8 @@
 
 @max-width: 1000px;
 @cell-height: 60px;
+@controller-size: 30px;
+@controller-space: 10px;
 
 @color-gray: #ccc;
 @color-blue: #1e7ccc;
@@ -22,10 +24,24 @@
   &:last-child {
     border-right: 1px solid @border-color;
   }
-  padding: 3px;
   height: @cell-height;
   //100 siblings should be enough
   .siblingSameWidth(100);
+}
+
+.clearfix() {
+  *zoom: 1;
+
+  &:before,
+  &:after {
+    display: table;
+    line-height: 0;
+    content: "";
+  }
+
+  &:after {
+    clear: both;
+  }
 }
 
 
@@ -58,18 +74,51 @@
   }
 }
 .table-view {
-  display: flex;
-  flex-direction: column;
+  //display: flex;
+  //flex-direction: column;
+  &__row-controllers {
+    display: flex;
+    flex-direction: column;
+    margin-right: @controller-space;
+    float: left;
+    width: @controller-size;
+    &__cell {
+      border-left: 1px solid @border-color;
+      border-top: 1px solid @border-color;
+      border-right: 1px solid @border-color;
+      background-color: lighten(@border-color, 15%);
+      position: relative;
+      height: @cell-height;
+      width: @controller-size;
+      &:last-child {
+        border-bottom: 1px solid @border-color;
+      }
+      .menu-trigger {
+        position: absolute;
+        right: 10px;
+        top: 0;
+        cursor: pointer;
+        &:hover .dropdown{
+          display: block;
+          top: 0;
+          left: 0;
+        }
+      }
+    }
+  }
   &__col-controllers {
+    .clearfix();
     display: flex;
     flex-direction: row;
     border-top: 1px solid @border-color;
     border-bottom: 1px solid @border-color;
-    margin-bottom: 5px;
+    margin-bottom: @controller-space;
+    margin-left: @controller-size + @controller-space;
     &__cell {
       .cell-styles();
       background-color: lighten(@border-color, 15%);
       position: relative;
+      height: @controller-size;
       .menu-trigger {
         position: absolute;
         right: 10px;
@@ -82,6 +131,10 @@
         }
       }
     }
+  }
+  &__body {
+    width: @max-width - @controller-size - @controller-space;
+    float: right;
   }
   &__row {
     display: flex;
@@ -97,6 +150,7 @@
         display: none !important;
       }
       &__text {
+        padding: 5px;
         overflow: hidden;
         width: 100%;
         height: 100%;
