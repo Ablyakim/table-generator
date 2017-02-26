@@ -1,7 +1,8 @@
 import {
     SET_TABLE_DATA,
     ADD_COL_TO_INDEX,
-    REMOVE_COL_BY_INDEX
+    REMOVE_COL_BY_INDEX,
+    CHANGE_CELL_VALUE
 } from '../actions/table-actions';
 
 const calcAllControllersNum = (tableData) => {
@@ -45,6 +46,14 @@ const removeColByIndex = (state, action) => {
     }, calcAllControllersNum(tableData));
 };
 
+const changeCellValue = (state, action) => {
+    let tableData = state.data.slice();
+    tableData[action.rowIndex][action.colIndex] = action.value;
+    return Object.assign({}, state, {
+        data: tableData
+    }, calcAllControllersNum(tableData));
+};
+
 export default (state = {}, action) => {
     switch (action.type) {
         case SET_TABLE_DATA:
@@ -53,6 +62,8 @@ export default (state = {}, action) => {
             return addColToIndex(state, action);
         case REMOVE_COL_BY_INDEX:
             return removeColByIndex(state, action);
+        case CHANGE_CELL_VALUE:
+            return changeCellValue(state, action);
         default:
             return state;
     }

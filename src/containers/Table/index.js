@@ -4,8 +4,14 @@ import Row from 'Components/table/row';
 import ColController from './col-controller';
 const baseClassName = 'table-view';
 const colControllerBaseClassName = [baseClassName, 'col-controllers'].join('__');
+import {changeCellValue} from '../../actions/table-actions';
 
 class Table extends React.Component {
+
+    cellDidChangeValue = (rowIndex, cellIndex, newValue) => {
+        this.props.changeCellValue(rowIndex, cellIndex, newValue);
+    };
+
     render() {
         if (!this.props.data || !this.props.data.length) {
             return null;
@@ -30,6 +36,7 @@ class Table extends React.Component {
                     {this.props.data.map((cells, index) => {
                         return (
                             <Row
+                                onChangeCellValue={this.cellDidChangeValue}
                                 baseClassName={baseClassName}
                                 key={index}
                                 index={index}
@@ -59,7 +66,11 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {};
+    return {
+        changeCellValue: (rowIndex, cellIndex, value) => {
+            dispatch(changeCellValue(rowIndex, cellIndex, value))
+        }
+    };
 };
 
 export default connect(
