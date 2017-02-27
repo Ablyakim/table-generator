@@ -111,9 +111,9 @@
       }
       &__text {
         padding: 5px;
-        overflow: hidden;
-        width: 100%;
-        height: 100%;
+        overflow: scroll;
+        width: calc(~"100% - 10px");
+        height: calc(~"100% - 10px");
         cursor: pointer;
       }
       &__editor {
@@ -141,8 +141,32 @@
 }
 
 .import {
-  margin-top: 40px;
+  margin: 40px 0 40px 0;
+  .clearfix();
   &__import-button {
-    float: right;
+    float: left;
+    margin-right: 20px;
+  }
+  &__data {
+    resize: none;
+    height: 40px;
+    width: 500px;
+  }
+}
+
+.generated-table {
+  margin-top: 40px;
+  &__text {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid @border-color;
+    background-color: lighten(@color-gray, 15%);
+    pre {
+      overflow: scroll;
+    }
+  }
+  &__controller {
+    .clearfix();
+    margin-bottom: 20px;
   }
 }

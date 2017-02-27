@@ -49,7 +49,10 @@ class Cell extends React.Component {
                         )
                     }
                 >
-                    {this.props.value}
+                    <pre>
+                      {this.props.value}
+                    </pre>
+
                 </div>
                 <textarea
                     ref={(input) => this.input = input}
