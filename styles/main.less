@@ -146,3 +146,17 @@
     float: right;
   }
 }
+
+.generated-table {
+  margin-top: 40px;
+  &__text {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid @border-color;
+    background-color: lighten(@color-gray, 15%);
+  }
+  &__controller {
+    .clearfix();
+    margin-bottom: 20px;
+  }
+}

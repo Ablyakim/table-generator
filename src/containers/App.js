@@ -1,8 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Table from './Table';
+import TableGenerator from 'Components/table-generator';
 import {setTableData} from '../actions/table-actions';
+import RstTableGenerator from '../table-genrators/rst-generator';
 
+let tableGenerator = new RstTableGenerator();
 /**
  * Root container
  */
@@ -16,16 +19,19 @@ class App extends React.Component {
             <div>
                 <div className="container">
                     <Table />
-                    <div className="import">
-                        <div className="btn import__import-button">Generate table</div>
-                    </div>
+                    <TableGenerator
+                        tableData={this.props.tableData}
+                        tableGenerator={tableGenerator}
+                    />
                 </div>
             </div>
         )
     }
 }
 const mapStateToProps = (state) => {
-    return {};
+    return {
+        tableData: state.table.data
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
